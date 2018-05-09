@@ -1,7 +1,7 @@
 version: "3.3"
 services:
-  rmq:
-    image: lovelysystems/rabbitmq-swarm-cluster
+  rabbitmq:
+    image: abrturing/rabbitmq-swarm:3.7.4.0
     hostname: "{{.Service.Name}}.{{.Task.Slot}}.{{.Task.ID}}"
     deploy:
       replicas: 2
