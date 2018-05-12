@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.5"
 services:
   rabbitmq:
     image: abrturing/rabbitmq-swarm:3.7.4.0
@@ -18,6 +18,16 @@ services:
       - SERVICE_NAME={{.Service.Name}}
       - SLOT={{.Task.Slot}}
       - MASTER_SLOT=1
+    networks:
+      - overlay
     ports:
-      - "5672:5672"   # amqp
+      # - "5672:5672"   # amqp
       - "15672:15672" # web ui
+
+networks:
+  overlay:
+    # name property is introduced in docker-compose v3.5 but it's buggy, fixed in 18.04.
+    # because of the bug, it is always prefixed with stack name.
+    # name: rabbitmq_overlay
+    driver: overlay
+    attachable: true # albeit this is already the default value, explicitly setting is better.
